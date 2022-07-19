@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#edebf5] text-[#200263] tracking-wide
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold
+  }
+
+  h1 {
+    @apply text-[#553add]
+  }
+
+  li {
+    @apply cursor-pointer
+  }
+
+  button {
+    @apply text-white shadow-xl shadow-[#553ade] rounded-xl uppercase bg-gradient-to-r from-[#553ADD] to-[#553ade] px-4 py-1
+  }
+  
+  .my-image {
+    @apply rounded-xl
+  }
+
+  .hideForm {
+    display: none;
+  }
+
+  .showForm {
+    display: block;
+  }
+}
