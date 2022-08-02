@@ -9,14 +9,11 @@ export default function PlayerOne({ formStep, nextFormStep }) {
     const handleSubmit = (values) => {
         const first = document.querySelector('#player1FirstName').value;
         const last = document.querySelector('#player1LastName').value;
-        const number = document.querySelector('#player1StudentNum').value;
+        const id = document.querySelector('#player1NetId').value;
         const email = document.querySelector('#player1Email').value;
 
-        if (!first || !last || !email){
+        if (!first || !last || !email || !email){
             alert("All input fields are required.");
-        }
-        else if (number.length != 8){
-            alert("Hmmm that student number should have 8 digits...");
         }
         else {
             setFormValues(values);
@@ -69,8 +66,8 @@ export default function PlayerOne({ formStep, nextFormStep }) {
                         name="player1LastName"
                     />
                 </label>
-                <label className="block" htmlFor="player1StudentNum">
-                    <span className="text-gray-700 font-bold">Student Number</span>
+                <label className="block" htmlFor="player1NetId">
+                    <span className="text-gray-700 font-bold">NetID</span>
                     <input
                         type="text"
                         className="
@@ -83,8 +80,8 @@ export default function PlayerOne({ formStep, nextFormStep }) {
                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                         "
                         placeholder=""
-                        id="player1StudentNum"
-                        name="player1StudentNum"
+                        id="player1NetId"
+                        name="player1NetId"
                     />
                 </label>
                 <label className="block" htmlFor="player1Email">

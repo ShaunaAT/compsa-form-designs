@@ -1,22 +1,27 @@
 import React from "react";
-import { useFormData } from "../../context";
 import formStyles from "../../styles/formStyles.module.scss";
 
-export default function BasicInfo({ formStep, nextFormStep }) {
-    
-    const { setFormValues } = useFormData();
+export default function BasicInfo({ eventData, setEventData, formStep, nextFormStep }) {
 
-    const handleSubmit = (values) => {
-        const title = document.querySelector('#eventTitle').value;
-        const date = document.querySelector('#eventDate').value;
-        const location = document.querySelector('#eventLocation').value;
-        const description = document.querySelector('#eventDescription').value;
+    const handleSubmit = () => {
+        const eventTitle = document.querySelector('#eventTitle').value;
+        const eventDate = document.querySelector('#eventDate').value;
+        const eventLocation = document.querySelector('#eventLocation').value;
+        const eventDescription = document.querySelector('#eventDescription').value;
+        const eventId = document.querySelector('#eventId').value
 
-        if (!title || !date || !location || !description){
+        if (!eventTitle || !eventDate || !eventLocation || !eventDescription){
             alert("All input fields are required.");
         }
         else {
-            setFormValues(values);
+            setEventData({
+                ...eventData,
+                title: eventTitle,
+                date: eventDate,
+                location: eventLocation,
+                description: eventDescription,
+                event_id: eventId
+            })
             nextFormStep();
         }
         
@@ -100,6 +105,24 @@ export default function BasicInfo({ formStep, nextFormStep }) {
                         placeholder="Description"
                         id="eventDescription"
                         name="eventDescription"
+                    />
+                </label>
+                <label className="block" htmlFor="eventId">
+                    <span className="text-gray-700 font-bold">ID</span>
+                    <input
+                        type="text"
+                        className="
+                            mt-1
+                            block
+                            w-full
+                            rounded-md
+                            border-gray-300
+                            shadow-sm
+                            focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                        "
+                        placeholder="ID"
+                        id="eventId"
+                        name="eventId"
                     />
                 </label> 
                 <button type="button" onClick={handleSubmit} className="bg-[#200263] hover:bg-[#c6b9fe] py-2 my-4"> 

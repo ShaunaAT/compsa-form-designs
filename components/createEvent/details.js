@@ -1,12 +1,9 @@
 import React from "react";
-import { useFormData } from "../../context";
 import formStyles from "../../styles/formStyles.module.scss";
-import { TagsInput } from "react-tag-input-component";
-import { useState } from "react";
 
-export default function Details({ formStep, nextFormStep }) {
-    
-    const [eventTags, setEventTags] = useState([]);
+export default function Details({eventData, setEventData, formStep, nextFormStep }) {
+
+    var eTags = [];
 
     function handleKeyDown(e){
         if (e.key !== 'Enter') {
@@ -18,12 +15,36 @@ export default function Details({ formStep, nextFormStep }) {
         if (!value.trim()) {
             return;
         }
-        setEventTags([...eventTags, value]);
+
+        setEventData({
+            ...eventData,
+            tags: [...eventData.tags, value]
+        })
         e.target.value = '';
     }
 
     function removeTag(index){
-        setEventTags(eventTags.filter((el, i) => i !== index));
+        setEventData({
+            ...eventData,
+            tags: eventData.tags.filter((el, i) => i !== index)
+        })
+    }
+
+    function create(){
+        const url = document.querySelector('#eventImageURL').value;
+        const active = document.querySelector('#eventIsActive').checked;
+        
+        setEventData({
+            ...eventData,
+            tags: eTags
+        });
+
+        setEventData({
+            ...eventData,
+            image: url,
+            is_active: active
+        });
+        nextFormStep();
     }
 
     return (
@@ -35,7 +56,7 @@ export default function Details({ formStep, nextFormStep }) {
             <div className="grid grid-cols-1 gap-6">
                 <form className="flex flex-col" >
                     <span className="text-gray-700 font-bold">Event Tags</span>
-                    { eventTags.map((tag, index) => (
+                    { eventData.tags.map((tag, index) => (
                         <div className="tag-item" key={index}>
                             <span className="text">{tag}</span>
                             <span className="close" onClick={() => removeTag(index)}>&times;</span>
@@ -43,7 +64,7 @@ export default function Details({ formStep, nextFormStep }) {
                         )) 
                     }
                     <input onKeyDown={handleKeyDown} type="text" placeholder="Add Tags" /> 
-                    <label className="block" htmlFor="eventDescription">
+                    <label className="block" htmlFor="eventImageURL">
                     <span className="text-gray-700 font-bold">Event Image URL</span>
                     <input
                         type="url"
@@ -61,15 +82,15 @@ export default function Details({ formStep, nextFormStep }) {
                         name="eventImageURL"
                     />
                     </label>
-                    <label for="eventIsActive"> Active
+                    <label htmlFor="eventIsActive"> Active
                         <input
                             type="checkbox"
                             id="eventIsActive"
                             name="eventIsActive"
-                            value="active"
+                            value="false"
                         />
                     </label>
-            <button type="button" onClick={nextFormStep} className="bg-[#200263] hover:bg-[#c6b9fe] py-2 my-4"> 
+            <button type="button" onClick={create} className="bg-[#200263] hover:bg-[#c6b9fe] py-2 my-4"> 
                 Next
             </button>
             </form>

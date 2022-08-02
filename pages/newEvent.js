@@ -5,9 +5,22 @@ import Details from '../components/createEvent/details';
 import Awards from '../components/createEvent/awards';
 import EventSuccess from '../components/createEvent/eventSuccess';
 import FormCard from '../components/formCard';
+import EventConfirmation from '../components/createEvent/eventConfirmation';
 
 const NewEvent = () => {
     const [formStep, setFormStep] = useState(0);
+
+    const [eventData, setEventData] = useState({
+      event_id: "",
+      title: "",
+      date: "",
+      location: "",
+      description: "",
+      image: "",
+      is_active: false,
+      awards: [],
+      tags: [],
+    });
 
     const nextFormStep = () => setFormStep((currentStep) => currentStep + 1);
     
@@ -17,15 +30,18 @@ const NewEvent = () => {
         <div>
           <FormCard currentStep={formStep} prevFormStep={prevFormStep} maxStep={2} >
             {formStep >= 0 && (
-              <BasicInfo formStep={formStep} nextFormStep={nextFormStep}/>
+              <BasicInfo eventData={eventData} setEventData={setEventData} formStep={formStep} nextFormStep={nextFormStep}/>
             )}
             {formStep >= 1 && (
-              <Details formStep={formStep} nextFormStep={nextFormStep} />
+              <Details eventData={eventData} setEventData={setEventData} formStep={formStep} nextFormStep={nextFormStep} />
             )}
             {formStep >= 2 && (
-              <Awards formStep={formStep} nextFormStep={nextFormStep}/>
+              <Awards eventData={eventData} setEventData={setEventData} formStep={formStep} nextFormStep={nextFormStep}/>
             )}
-            {formStep > 2 && <EventSuccess/> }
+            {formStep >= 3 && (
+              <EventConfirmation eventData={eventData} setEventData={setEventData} formStep={formStep} nextFormStep={nextFormStep}/>
+            )}
+            {formStep > 3 && <EventSuccess/> }
           </FormCard>
         </div>
       )

@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import { useFormData } from "../../context";
+import React from "react";
 import formStyles from "../../styles/formStyles.module.scss";
 
-export default function Awards({ formStep, nextFormStep }) {
+export default function Awards({ eventData, setEventData, formStep, nextFormStep }) {
 
-    const [awards, setAwards] = useState([]);
+    const eventAwards = [];
 
-    const addEvent = (values) => {
+    const addAward = () => {
         const name = document.querySelector('#awardName').value;
         const value = document.querySelector('#awardValue').value;
         const maxRec = document.querySelector('#maxRecipients').value;
@@ -17,12 +16,19 @@ export default function Awards({ formStep, nextFormStep }) {
             maxRecipients: maxRec
         }
 
-        setAwards(awards => [...awards, award]);
+        eventAwards.push(award);
+
+        setEventData({
+            ...eventData,
+            awards: eventAwards
+        })
 
         document.querySelector('#awardName').value = "";
         document.querySelector('#awardValue').value = "";
         document.querySelector('#maxRecipients').value = "";
+
     }
+
     
     return (
         <div className={formStep === 2 ? formStyles.showForm : formStyles.hideForm}>
@@ -32,7 +38,7 @@ export default function Awards({ formStep, nextFormStep }) {
             <div className="mt-8">
             <div className="grid grid-cols-1 gap-6">
                 <form className="flex flex-col" >
-                <pre>{JSON.stringify(awards)}</pre>
+                <pre>{JSON.stringify(eventData.awards)}</pre>
                 <label className="block" htmlFor="awardName">
                     <span className="text-gray-700 font-bold">Award Name</span>
                     <input
@@ -88,8 +94,8 @@ export default function Awards({ formStep, nextFormStep }) {
                     />
                 </label> 
                 </form>
-                <button type="button" onClick={addEvent} className="bg-[#200263] hover:bg-[#c6b9fe] py-2 my-4"> 
-                    Add Another
+                <button type="button" onClick={addAward} className="bg-[#200263] hover:bg-[#c6b9fe] py-2 my-4"> 
+                    Add Award
                 </button>
                 <button type="button" onClick={nextFormStep} className="bg-[#200263] hover:bg-[#c6b9fe] py-2 my-4"> 
                     Next
